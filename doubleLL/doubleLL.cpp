@@ -13,49 +13,49 @@ struct Node
 Node* START = NULL;
 
 void addNode() {
-    Node* newNode = new Node();     
+    Node* newNode = new Node();         //step 1: create a new mode    
     cout << "\nEnter the roll number of the student: ";
-    cin >> newNode->noMhs;          
+    cin >> newNode->noMhs;              //Assign value to the data field of the new code
     cout << "\nEnter the name of the student: ";
-    cin >> newNode->name;  
+    cin >> newNode->name;               //Assign value to the data field of the new node
 
-    
-    if (START == NULL || newNode->noMhs <= START->noMhs) {
+    //Insert the new node in the list
+    if (START == NULL || newNode->noMhs <= START->noMhs) {      //step 2: insert the new node
         if (START != NULL && newNode->noMhs == START->noMhs) {
             cout << "\033[31mDuplicate roll members not allowed\033[0m" << endl;
             return;
         }
         //if the list is empty, make the new node the START
-        newNode->next = START; 
+        newNode->next = START;      //step 3: make the new node point to the first node
         if (START != NULL) {
-            START->prev = newNode;
+            START->prev = newNode;  //step 4: make the first node point to the new node
 
         }
-        newNode->prev = NULL;
-        START = newNode;
+        newNode->prev = NULL;       //step 5: make the new node point to NULL
+        START = newNode;            //step 6: make the new node the first node
     }
     else {
-        //
-        Node* current = START;
-        Node* previous = NULL;
+        //insert the new node in the middle or at the end
+        Node* current = START;      //step 1.a: start from the first node
+        Node* previous = NULL;      //step 1.b: previous node is NULL initiaally
 
-        while (current != NULL && current->noMhs < newNode->noMhs) {
-            previous = current;
-            current = current->next;
+        while (current != NULL && current->noMhs < newNode->noMhs) {    //step 1.c: traverse
+            previous = current;         //step 1.d: move the previous to the current node
+            current = current->next;    //step 1.e: move the current to the next node
         }
 
-        newNode->next = current;
-        newNode->prev = previous;
+        newNode->next = current;        //step 4: make the next field of the new mode point
+        newNode->prev = previous;       //step 5: make the previous field of the new node point
 
         if (current != NULL) {
-            current->prev = newNode;
+            current->prev = newNode;    //step 6: make the previous field of the current
         }
 
         if (previous != NULL) {
-            previous->next = newNode;
+            previous->next = newNode;   //step 7: make the next field of the previou node
         }
         else {
-            //
+            //if previous is still NULL, it means newNode is now the first node
             START = newNode;
         }
     }
@@ -79,17 +79,17 @@ void deleteNode()
     int rollNo;
 
     cout << "\nEnter the roll number of the student whose record is to be deleted: ";
-    cin >> rollNo; 
+    cin >> rollNo;     //step 3: get the roll number to be deleted
 
     if (START == NULL)
     {
         cout << "List is empty" << endl;
         return;
     }
-    current = START;
+    current = START;    //step 1: start from the first node
     previous = NULL;
 
-    //
+    //Locate the node to be deleted
     while (current != NULL && current->noMhs != rollNo)
     {
         previous = current;
@@ -100,21 +100,21 @@ void deleteNode()
         cout << "\033[31mThe record with roll number " << rollNo << " not found\033[0m" << endl;
         return;
     }
-    //
+    //Node to be deleted is the first node
     if (current == START)
     {
-        START = START->next;
+        START = START->next;    //step 2: update the START pointer
         if (START != NULL)
-        {
-            START->prev = NULL;
+        {                           //
+            START->prev = NULL;     //step
         }
     }
     else
     {
-        //
+        //Node to be deleted is not the first node
         previous->next = current->next;
         if (current->next != NULL)
-        {   //
+        {   //if there's a successor, update its prev pointer
             current->next->prev = previous;
         }
     }
@@ -136,11 +136,11 @@ void traverse()
     else
     {
         cout << "\nRecords in ascending order of roll number are: " << endl;
-        Node* currentNode = START;
-        while (currentNode != NULL)
+        Node* currentNode = START;      //step 1
+        while (currentNode != NULL)     //step 2
         {
-            cout << currentNode->noMhs << " " << currentNode->name << endl;
-            currentNode = currentNode->next;
+            cout << currentNode->noMhs << " " << currentNode->name << endl; //step 3
+            currentNode = currentNode->next;                                //step 4
         }
     }
 }
